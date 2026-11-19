@@ -41,12 +41,12 @@ class TokenResponse(BaseModel):
 
 @router.post("/dev-token", response_model=TokenResponse)
 def dev_token(
-    payload: DevTokenRequest,
     settings: Annotated[Settings, Depends(get_settings)],
+    payload: DevTokenRequest | None = None,
 ) -> TokenResponse:
     if settings.app_env != "local":
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Not Found")
-    token = create_access_token(payload.subject, settings)
+    token = create_access_token((payload or DevTokenRequest()).subject, settings)
     return TokenResponse(
         access_token=token, expires_in=int(DEFAULT_EXPIRES.total_seconds())
     )
