@@ -7,7 +7,12 @@ from typing import Any
 from app.middleware import get_request_id
 
 # Attributes every LogRecord has; anything else came from `extra=`.
-_STANDARD_ATTRS = set(logging.makeLogRecord({}).__dict__) | {"message", "asctime", "request_id", "color_message"}
+_STANDARD_ATTRS = set(logging.makeLogRecord({}).__dict__) | {
+    "message",
+    "asctime",
+    "request_id",
+    "color_message",
+}
 
 
 class RequestIDFilter(logging.Filter):
@@ -21,7 +26,9 @@ class RequestIDFilter(logging.Filter):
 class JSONFormatter(logging.Formatter):
     def format(self, record: logging.LogRecord) -> str:
         payload: dict[str, Any] = {
-            "timestamp": datetime.fromtimestamp(record.created, timezone.utc).isoformat(),
+            "timestamp": datetime.fromtimestamp(
+                record.created, timezone.utc
+            ).isoformat(),
             "level": record.levelname,
             "logger": record.name,
             "message": record.getMessage(),

@@ -32,6 +32,7 @@ async def get_document(document_id: int, session: SessionDep) -> Document:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Document not found")
     return doc
 
+
 @router.delete("/{document_id}", response_model=DocumentOut)
 async def delete_document(document_id: int, session: SessionDep) -> Document:
     doc = await session.get(Document, document_id)

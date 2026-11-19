@@ -23,7 +23,9 @@ def create_access_token(
     settings = settings or get_settings()
     now = datetime.now(timezone.utc)
     claims = {"sub": subject, "iat": now, "exp": now + expires_delta}
-    return jwt.encode(claims, settings.jwt_secret.get_secret_value(), algorithm=ALGORITHM)
+    return jwt.encode(
+        claims, settings.jwt_secret.get_secret_value(), algorithm=ALGORITHM
+    )
 
 
 def _unauthorized(detail: str) -> HTTPException:

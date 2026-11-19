@@ -14,7 +14,9 @@ class HealthResponse(BaseModel):
 
 
 @router.get("/health", response_model=HealthResponse)
-def health_check(settings: Annotated[Settings, Depends(get_settings)]) -> HealthResponse:
+def health_check(
+    settings: Annotated[Settings, Depends(get_settings)],
+) -> HealthResponse:
     """
     Health check endpoint to verify the service is running.
     Returns a JSON response with the status of the service.

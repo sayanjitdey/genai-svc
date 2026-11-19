@@ -47,4 +47,6 @@ def dev_token(
     if settings.app_env != "local":
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Not Found")
     token = create_access_token(payload.subject, settings)
-    return TokenResponse(access_token=token, expires_in=int(DEFAULT_EXPIRES.total_seconds()))
+    return TokenResponse(
+        access_token=token, expires_in=int(DEFAULT_EXPIRES.total_seconds())
+    )

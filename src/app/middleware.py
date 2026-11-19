@@ -29,7 +29,9 @@ class RequestIDMiddleware:
             return
 
         incoming = Headers(scope=scope).get(REQUEST_ID_HEADER)
-        request_id = incoming if incoming and _VALID_ID.match(incoming) else uuid.uuid4().hex
+        request_id = (
+            incoming if incoming and _VALID_ID.match(incoming) else uuid.uuid4().hex
+        )
         token = request_id_ctx.set(request_id)
 
         async def send_with_id(message: Message) -> None:

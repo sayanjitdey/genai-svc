@@ -10,7 +10,9 @@ from sqlalchemy.ext.asyncio import (
 from app.config import get_settings
 
 # create_async_engine is lazy: no connection is opened until first use.
-engine: AsyncEngine = create_async_engine(get_settings().database_url, pool_pre_ping=True)
+engine: AsyncEngine = create_async_engine(
+    get_settings().database_url, pool_pre_ping=True
+)
 
 # expire_on_commit=False keeps attributes loadable after commit, which an
 # async session can't do (it can't lazily refresh outside an await).
