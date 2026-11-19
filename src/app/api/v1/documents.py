@@ -6,8 +6,13 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.db import get_session
 from app.models import Document
 from app.schemas import DocumentCreate, DocumentOut
+from app.security import get_current_user
 
-router = APIRouter(prefix="/v1/documents", tags=["documents"])
+router = APIRouter(
+    prefix="/v1/documents",
+    tags=["documents"],
+    dependencies=[Depends(get_current_user)],
+)
 
 SessionDep = Annotated[AsyncSession, Depends(get_session)]
 

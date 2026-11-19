@@ -1,21 +1,26 @@
 from functools import lru_cache
+from pathlib import Path
 from typing import Literal
 
 from pydantic import SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+# Project root (the directory holding .env), independent of the launch cwd.
+ENV_FILE = Path(__file__).resolve().parents[2] / ".env"
 
 
 class Settings(BaseSettings):
     """App settings. Real environment variables take precedence over .env."""
 
     model_config = SettingsConfigDict(
-        env_file=".env",
+        env_file=ENV_FILE,
         env_file_encoding="utf-8",
         extra="ignore",
     )
 
     app_env: Literal["local", "staging", "prod"] = "local"
-    database_url: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/genai"
+    log_level: str = "INFO"
+    database_url: str ="postgresql+asyncpg://postgres:postgres@localhost:5432/genai"
     jwt_secret: SecretStr
 
 
