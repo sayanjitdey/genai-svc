@@ -15,7 +15,7 @@ class Settings(BaseSettings):
     )
 
     app_env: Literal["local", "staging", "prod"] = "local"
-    database_url: str
+    database_url: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/genai"
     jwt_secret: SecretStr
 
 
